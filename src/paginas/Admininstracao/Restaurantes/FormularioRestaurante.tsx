@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, Link, Paper, TextField, Toolbar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import IRestaurante from "../../../interfaces/IRestaurante";
@@ -8,14 +8,14 @@ export default function FormularioRestaurante() {
   const [nomeRestaurante, setNomeRestaurante] = useState('');
   const parametros = useParams();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (parametros.id) {
       http.get<IRestaurante>(`restaurantes/${parametros.id}/`)
-      .then(response => {
-        setNomeRestaurante(response.data.nome)
-      });
+        .then(response => {
+          setNomeRestaurante(response.data.nome)
+        });
     }
-  },[parametros])
+  }, [parametros])
 
   const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
@@ -40,18 +40,18 @@ export default function FormularioRestaurante() {
   }
 
   return (
-    <Box sx={{display: 'flex', flexDirection:'column', alignItems:'center'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexGrow: 1 }}>
       <Typography component='h1' variant='h6'>Formulário de Restaurante</Typography>
-      <Box component='form' onSubmit={aoSubmeterForm}>
-        <TextField 
-          label="Nome do Restaurante" 
-          variant="standard" 
+      <Box component='form' sx={{ width: '100%' }} onSubmit={aoSubmeterForm}>
+        <TextField
+          label="Nome do Restaurante"
+          variant="standard"
           required
           fullWidth
-          value={nomeRestaurante} 
-          onChange={event => setNomeRestaurante(event.target.value)} 
+          value={nomeRestaurante}
+          onChange={event => setNomeRestaurante(event.target.value)}
         />
-        <Button sx={{marginTop:1}} fullWidth variant="outlined" type="submit">Salvar</Button>
+        <Button sx={{ marginTop: 1 }} fullWidth variant="outlined" type="submit">Salvar</Button>
       </Box>
     </Box>
   );
